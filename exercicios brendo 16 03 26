@@ -1,0 +1,52 @@
+Parte 1 - 
+LSP
+Qual trecho do código viola o princípio: - throw new Error("Gerente não escreve código"); throw new Error("Dev não gerencia equipe"); throw new Error("Estagiário recebe bolsa, não salário");
+
+Por que é uma violação: Pois as classes implementam a interface funcionário mesmo não fazendo sentido para elas , por isso dão error, o código espera 
+por funcionário mas recebe um desses métodos, podendo quebrar dependendo da classe
+
+Qual o impacto no sistema: Inesperado, subclasses não podendo realizar funções, erros na execução
+
+
+ISP
+Qual trecho do código viola o princípio: - interface Funcionario { trabalhar(): void; registrarPonto(): void; receberSalario(): void; gerenciarEquipe(): void; escreverCodigo(): void; }
+
+Por que é uma violação: Obriga as classes a usarem métodos que não utilizam, gerente não escreve, desenvolvedor não gerencia e estagiário não recebe
+
+Qual o impacto no sistema: Código tendo que ser mudado constantemente, métodos desnecessários pesando a classe
+
+DIP
+Qual trecho do código viola o princípio: -
+
+Por que é uma violação:
+
+Qual o impacto no sistema:
+
+
+Parte 2 - interface Trabalhavel { trabalhar(): void; } interface RegistravelPonto { registrarPonto(): void; } interface Assalariado { receberSalario(): void; } interface Gerenciavel { gerenciarEquipe(): void; } interface Programavel { escreverCodigo(): void; } 
+
+Gerente
+class Gerente implements Trabalhavel, RegistravelPonto, Assalariado, Gerenciavel { trabalhar(): void { console.log("Gerente trabalhando"); } registrarPonto(): void { console.log("Ponto registrado"); } receberSalario(): void { console.log("Salário recebido"); } gerenciarEquipe(): void { console.log("Gerenciando equipe"); } } 
+
+Desenvolvedor
+class Desenvolvedor implements Trabalhavel, RegistravelPonto, Assalariado, Programavel { trabalhar(): void { console.log("Desenvolvedor trabalhando"); } registrarPonto(): void { console.log("Ponto registrado"); } receberSalario(): void { console.log("Salário recebido"); } escreverCodigo(): void { console.log("Escrevendo código"); } } 
+
+Estagiário
+
+class Estagiario implements Trabalhavel, RegistravelPonto, Programavel { trabalhar(): void { console.log("Estagiário trabalhando"); } registrarPonto(): void { console.log("Ponto registrado"); } escreverCodigo(): void { console.log("Estagiário escrevendo código"); } } 
+
+Parte 3 - SistemaRh 
+class SistemaRH { constructor(private funcionario: Trabalhavel){}
+iniciarTrabalho(){
+    this.funcionario.trabalhar();
+}}
+Uso:
+const dev = new Desenvolvedor(); const
+gerente = new Gerente(); const sistema1 = 
+new SistemaRH(dev); const sistema2 = 
+new SistemaRH (gerente);
+
+
+
+
+
